@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe Book do
-  let :author { Author.create! }
+  let :author { Author.first }
   describe "validations" do
     it "can be created with all fields" do
       b = Book.new(author: author, title: "test book")
@@ -55,10 +55,14 @@ describe Book do
 
   describe "relations" do
     it "has an author" do
-      b = Book.new(author_id: author.id)
+      b = books(:poodr)
+      a = authors(:metz)
+
+      binding.pry
+
       b.must_respond_to :author
-      b.author.must_equal author
-      b.author_id.must_equal author.id
+      b.author.must_equal a
+      b.author_id.must_equal a.id
     end
 
     it "has a collection of genres" do

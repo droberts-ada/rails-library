@@ -1,0 +1,11 @@
+poodr:
+  title: Practical Object Oriented Design in Ruby
+  publication_year: 2012
+  author: metz
+99_bottles:
+  title: 99 Bottles of OOP
+  author: metz
+
+parable:
+  title: Parable of the Sower
+  author: butler
