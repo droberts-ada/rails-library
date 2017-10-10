@@ -54,6 +54,22 @@ describe Book do
   end
 
   describe "relations" do
+    it "has an author" do
+      b = Book.new(author_id: author.id)
+      b.must_respond_to :author
+      b.author.must_equal author
+      b.author_id.must_equal author.id
+    end
+
+    it "has a collection of genres" do
+      b = Book.new
+      b.must_respond_to :genres
+      b.genres.must_be :empty?
+
+      g = Genre.create!(name: "test genre")
+      b.genres << g
+      b.genres.must_include g
+    end
   end
 
   describe "age" do
