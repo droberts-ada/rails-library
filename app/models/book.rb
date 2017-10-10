@@ -1,8 +1,5 @@
 # app/models/book.rb
 class Book < ApplicationRecord
-
-  # This is no longer a conflict!
-
   belongs_to :author
   has_and_belongs_to_many :genres
 
