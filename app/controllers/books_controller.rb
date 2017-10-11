@@ -5,7 +5,7 @@ class BooksController < ApplicationController
       if author
         @books = author.books
       else
-        render status: :not_found, file: "#{Rails.root}/public/404.html"
+        head :not_found
       end
     else
       @books = Book.all
@@ -33,39 +33,46 @@ class BooksController < ApplicationController
       redirect_to books_path
     else
       # Tell the user what went wrong
-      render :new
+      render :new, status: :bad_request
     end
   end
 
   def show
-    @book = Book.find(params[:id])
-    # @book = Book.find_by(title: params[:book_id])
+    find_book_by_params_id
   end
 
   def edit
-    @book = Book.find(params[:id])
+    find_book_by_params_id
   end
 
   def update
-    @book = Book.find(params[:id])
-    @book.update_attributes(book_params)
-    if @book.save
-      redirect_to book_path(@book)
-    else
-      render :edit
+    if find_book_by_params_id
+      @book.update_attributes(book_params)
+      if @book.save
+        redirect_to book_path(@book)
+      else
+        render :edit, status: :bad_request
+      end
     end
   end
 
   def destroy
-    @book = Book.find(params[:id])
-    # Always use destroy! Delete will create weird bugs for you.
-    # @book.delete
-    @book.destroy
-    redirect_to books_path
+    if find_book_by_params_id
+      @book.destroy
+      redirect_to books_path
+    end
   end
 
 private
   def book_params
     return params.require(:book).permit(:title, :author_id, :publication_year)
+  end
+
+  def find_book_by_params_id
+    @book = Book.find_by(id: params[:id])
+    unless @book
+      head :not_found
+    end
+    return @book
   end
 end
