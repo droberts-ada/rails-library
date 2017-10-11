@@ -1,7 +1,12 @@
 class BooksController < ApplicationController
   def index
     if params[:author_id]
-      @books = Author.find(params[:author_id]).books
+      author = Author.find_by(id: params[:author_id])
+      if author
+        @books = author.books
+      else
+        render status: :not_found, file: "#{Rails.root}/public/404.html"
+      end
     else
       @books = Book.all
     end
@@ -25,7 +30,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
 
     if @book.save
-      redirect_to('/books')
+      redirect_to books_path
     else
       # Tell the user what went wrong
       render :new
