@@ -25,3 +25,11 @@
  .field_with_errors {
    display: inline;
  }
+
+ .flash.success {
+   color: green;
+ }
+
+ .flash.failure {
+   color: red;
+ }

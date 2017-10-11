@@ -30,9 +30,14 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
 
     if @book.save
+      flash[:status] = :success
+      flash[:message] = "Successfully created book #{@book.id}"
       redirect_to books_path
     else
       # Tell the user what went wrong
+      flash.now[:status] = :failure
+      flash.now[:message] = "Failed to create book"
+      flash.now[:details] = @book.errors.messages
       render :new, status: :bad_request
     end
   end
@@ -50,8 +55,10 @@ class BooksController < ApplicationController
       @book.update_attributes(book_params)
       if @book.save
         redirect_to book_path(@book)
+        return
       else
         render :edit, status: :bad_request
+        return
       end
     end
   end
