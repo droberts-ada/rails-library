@@ -64,8 +64,29 @@ class BooksController < ApplicationController
   end
 
   def destroy
+    current_author = nil
+    if session[:logged_in_author]
+      current_author = Author.find_by(id:session[:logged_in_author])
+
+    # The following code is redundant
+    # else
+    #   flash[:status] = :failure
+    #   flash[:message] = "You must be logged in to do that!"
+    #   redirect_to books_path
+    #   return
+    end
+
     if find_book_by_params_id
+      if current_author != @book.author
+        flash[:status] = :failure
+        flash[:message] = "Only a book's author can destroy it!"
+        redirect_to books_path
+        return
+      end
+
       @book.destroy
+      flash[:status] = :success
+      flash[:message] = "Deleted book #{@book.id}"
       redirect_to books_path
     end
   end

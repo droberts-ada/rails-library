@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   resources :authors, only: [:index, :new, :create] do
     resources :books, only: [:index, :new]
   end
+
+  get 'login', to: 'authors#login_form', as: 'login'
+  post 'login', to: 'authors#login'
+
+
   # Build the same nested routes manually
   # get '/authors/:author_id/books', to: 'books#index', as: 'author_books'
   # get '/authors/:author_id/books/new', to: 'books#new', as: 'new_author_book'

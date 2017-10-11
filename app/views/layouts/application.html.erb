@@ -11,6 +11,13 @@
   <body>
     <header>
       <h1>Welcome to Dan and Jamie's Library!</h1>
+      <% if session[:logged_in_author] %>
+        <p>Logged in as
+          <%= Author.find(session[:logged_in_author]).name %>
+        </p>
+      <% else %>
+        <p>Not logged in</p>
+      <% end %>
     </header>
 
     <main>
