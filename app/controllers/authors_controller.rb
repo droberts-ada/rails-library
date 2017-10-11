@@ -21,8 +21,8 @@ class AuthorsController < ApplicationController
       session[:logged_in_author] = author.id
       redirect_to books_path
     else
-      flash[:status] = :failure
-      flash[:message] = "No author found with name #{name}"
+      flash.now[:status] = :failure
+      flash.now[:message] = "No author found with name #{name}"
       render :login_form
     end
   end
