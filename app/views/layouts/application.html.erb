@@ -10,14 +10,27 @@
 
   <body>
     <header>
-      <h1>Welcome to Dan and Jamie's Library!</h1>
-      <% if session[:logged_in_author] %>
-        <p>Logged in as
-          <%= Author.find(session[:logged_in_author]).name %>
-        </p>
-      <% else %>
-        <p>Not logged in</p>
-      <% end %>
+      <h1 class="row">Welcome to Dan and Jamie's Library!</h1>
+      <nav class="row">
+        <div class="large-8 small-12 columns button-group row">
+          <%= link_to "All Books", books_path, class: "warning button small-6 large-2" %>
+          <%= link_to "New Book", new_book_path, class: "alert button small-6 large-2" %>
+          <%= link_to "All Authors", authors_path, class: "success button small-6 large-2" %>
+          <%= link_to "New Author", new_author_path, class: "button small-6 large-2" %>
+        </div>
+        <div class="large-4 small-12 columns button-group">
+          <% if session[:logged_in_author] %>
+            <p class="button">
+              Logged in as
+              <%= Author.find(session[:logged_in_author]).name %>
+            </p>
+            <%= link_to "Log out", logout_path, class: "button" %>
+          <% else %>
+            <%= link_to "Log in", login_path, class: "button" %>
+          <% end %>
+        </div>
+      </nav>
+
     </header>
 
     <main>

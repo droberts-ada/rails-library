@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   get 'login', to: 'authors#login_form', as: 'login'
   post 'login', to: 'authors#login'
+  get 'logout', to: 'authors#logout', as: 'logout'
 
 
   # Build the same nested routes manually

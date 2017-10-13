@@ -33,3 +33,13 @@
  .flash.failure {
    color: red;
  }
+
+nav div {
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+nav div .button {
+  box-sizing: border-box;
+  border-width: 0px;
+}
