@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :find_book_by_params_id, only: [:show, :edit, :update, :destroy]
+
   def index
     if params[:author_id]
       author = Author.find_by(id: params[:author_id])
@@ -11,8 +13,6 @@ class BooksController < ApplicationController
       @books = Book.all
     end
   end
-
-  # Add in another comment
 
   def new #Only cares about showing the form
     @book = Book.new
@@ -29,37 +29,26 @@ class BooksController < ApplicationController
     # @book = Book.new(params[:book]) # Rails will throw an error because this is insecure
     @book = Book.new(book_params)
 
-    if @book.save
-      flash[:status] = :success
-      flash[:message] = "Successfully created book #{@book.id}"
+    if save_and_flash(@book)
       redirect_to books_path
     else
-      # Tell the user what went wrong
-      flash.now[:status] = :failure
-      flash.now[:message] = "Failed to create book"
-      flash.now[:details] = @book.errors.messages
       render :new, status: :bad_request
     end
   end
 
-  def show
-    find_book_by_params_id
-  end
+  def show ; end
 
-  def edit
-    find_book_by_params_id
-  end
+  def edit ; end
 
   def update
-    if find_book_by_params_id
-      @book.update_attributes(book_params)
-      if @book.save
-        redirect_to book_path(@book)
-        return
-      else
-        render :edit, status: :bad_request
-        return
-      end
+    #if find_book_by_params_id
+    @book.update_attributes(book_params)
+    if save_and_flash(@book)
+      redirect_to book_path(@book)
+      return
+    else
+      render :edit, status: :bad_request
+      return
     end
   end
 
@@ -76,7 +65,7 @@ class BooksController < ApplicationController
     #   return
     end
 
-    if find_book_by_params_id
+    # if find_book_by_params_id
       if current_author != @book.author
         flash[:status] = :failure
         flash[:message] = "Only a book's author can destroy it!"
@@ -88,7 +77,7 @@ class BooksController < ApplicationController
       flash[:status] = :success
       flash[:message] = "Deleted book #{@book.id}"
       redirect_to books_path
-    end
+    # end
   end
 
 private
@@ -101,6 +90,8 @@ private
     unless @book
       head :not_found
     end
-    return @book
+    # Don't need a return b/c we're no longer calling this directly
+    # and if there's an error we won't even get into our controller action
+    # return @book
   end
 end
