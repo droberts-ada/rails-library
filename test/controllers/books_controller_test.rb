@@ -129,12 +129,12 @@ describe BooksController do
       book = Book.first
       book_data = {
         book: {
-          title: "Changed title",
+          title: "changed title",
           author_id: book.author_id
         }
       }
       book.update_attributes(book_data[:book])
-      book.must_be :valid?
+      book.must_be :valid?, "Test is invalid because the provided data will produce an invalid book"
 
       patch book_path(book), params: book_data
 
