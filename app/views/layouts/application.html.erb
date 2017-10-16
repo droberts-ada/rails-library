@@ -12,13 +12,14 @@
     <header>
       <h1 class="row">Welcome to Dan and Jamie's Library!</h1>
       <nav class="row">
-        <div class="large-8 small-12 columns button-group row">
-          <%= link_to "All Books", books_path, class: "warning button small-6 large-2" %>
-          <%= link_to "New Book", new_book_path, class: "alert button small-6 large-2" %>
-          <%= link_to "All Authors", authors_path, class: "success button small-6 large-2" %>
-          <%= link_to "New Author", new_author_path, class: "button small-6 large-2" %>
+        <div class="large-8 small-12 columns button-group" id="nav-buttons">
+            <%= link_to "All Books", books_path, class: "warning button small-6 large-2" %>
+            <%= link_to "New Book", new_book_path, class: "alert button small-6 large-2" %>
+            <%= link_to "All Authors", authors_path, class: "success button small-6 large-2" %>
+            <%= link_to "New Author", new_author_path, class: "button small-6 large-2" %>
+
         </div>
-        <div class="large-4 small-12 columns button-group">
+        <div class="large-4 small-12 columns button-group" id="login-buttons">
           <% if session[:logged_in_author] %>
             <p class="button">
               Logged in as
@@ -28,6 +29,7 @@
           <% else %>
             <%= link_to "Log in", login_path, class: "button" %>
           <% end %>
+
         </div>
       </nav>
 

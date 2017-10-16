@@ -43,3 +43,10 @@ nav div .button {
   box-sizing: border-box;
   border-width: 0px;
 }
+
+nav .button-group.columns {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#login-buttons
