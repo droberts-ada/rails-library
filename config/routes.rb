@@ -21,9 +21,8 @@ Rails.application.routes.draw do
     resources :books, only: [:index, :new]
   end
 
-  get 'login', to: 'authors#login_form', as: 'login'
-  post 'login', to: 'authors#login'
-  get 'logout', to: 'authors#logout', as: 'logout'
+  get '/auth/:provider/callback', to: 'users#login'
+  get '/logout', to: 'users#logout', as: 'logout'
 
 
   # Build the same nested routes manually
