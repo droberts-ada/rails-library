@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :books, only: [:index, :new]
   end
 
-  get '/auth/:provider/callback', to: 'users#login'
+  get '/auth/:provider/callback', to: 'users#login', as: 'auth_callback'
   get '/logout', to: 'users#logout', as: 'logout'
 
 
